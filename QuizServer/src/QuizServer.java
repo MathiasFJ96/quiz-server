@@ -15,18 +15,28 @@ public class QuizServer {
 					ServerSocket serverSocket = new ServerSocket(8000);
 					while (true) {
 					
-						Socket socket = serverSocket.accept();
+						Socket player1 = serverSocket.accept();
+						
+						new DataOutputStream(player1.getOutputStream()).writeInt(1);
+						
+						Socket player2 = serverSocket.accept();
+						
+						new DataOutputStream(player2.getOutputStream()).writeInt(2);
 				
 						System.out.println("ServerStarted");
 						clientNumber++;
 						
 						
-						InetAddress inetAddress = socket.getInetAddress(); 
-						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress.getHostName());
-						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress.getHostAddress());
+						InetAddress inetAddress1 = player1.getInetAddress(); 
+						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress1.getHostName());
+						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress1.getHostAddress());
+						
+						InetAddress inetAddress2 = player2.getInetAddress(); 
+						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress2.getHostName());
+						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress2.getHostAddress());
 						
 					
-						new Thread(new HandleaClient(socket)).start();
+						new Thread(new HandleaSession(player1, player2)).start();
 					}
 				
 				} catch (IOException e) {
@@ -40,21 +50,29 @@ public class QuizServer {
 
 
 
-class HandleaClient implements Runnable{
-	Socket socket;
-	DataInputStream inputFromClient;
-	DataOutputStream outPutToClient;
+class HandleaSession implements Runnable{
+	Socket player1;
+	Socket player2;
+	DataInputStream inputFromPlayer1;
+	DataOutputStream outPutToPlayer1;
+	DataInputStream inputFromPlayer2;
+	DataOutputStream outPutToPlayer2;
 	
-	HandleaClient(Socket socket){
-		this.socket = socket;
+	HandleaSession(Socket player1, Socket player2){
+		this.player1 = player1;
+		this.player2 = player2;
 	}
 	
 	@Override
 	public void run() {
 		try {
 			//input and output streams from clients
-			DataInputStream inputFromClient = new DataInputStream(socket.getInputStream());
-			DataOutputStream outPutToClient = new DataOutputStream(socket.getOutputStream());
+			inputFromPlayer1 = new DataInputStream(player1.getInputStream());
+			outPutToPlayer1 = new DataOutputStream(player1.getOutputStream());
+			
+			inputFromPlayer2 = new DataInputStream(player2.getInputStream());
+			outPutToPlayer2 = new DataOutputStream(player2.getOutputStream());
+			
 			while(true) {
 				
 				
@@ -67,3 +85,4 @@ class HandleaClient implements Runnable{
 	} // end run bracket
 	
 }
+
