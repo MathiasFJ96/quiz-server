@@ -1,6 +1,6 @@
 
 public class Question {
-	int a = 1;
+	int b = 1;
 	
 	/*Question 1: What is the capital of Denmark
 		A: Oslo
