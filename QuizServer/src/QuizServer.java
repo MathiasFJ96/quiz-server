@@ -26,25 +26,28 @@ public class QuizServer {
 						Socket player3 = serverSocket.accept();
 						
 						new DataOutputStream(player3.getOutputStream()).writeInt(3);
+						
+						
 				
-						System.out.println("ServerStarted");
-						clientNumber++;
+						System.out.println("Loby started " + " Number of clients: " + 3);
+						
 						
 						
 						InetAddress inetAddress1 = player1.getInetAddress(); 
-						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress1.getHostName());
-						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress1.getHostAddress());
+						System.out.println("Client "+ 1 + "s host name is " + inetAddress1.getHostName());
+						System.out.println("Client "+ 1 + "s ip address is " + inetAddress1.getHostAddress());
 						
 						InetAddress inetAddress2 = player2.getInetAddress(); 
-						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress2.getHostName());
-						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress2.getHostAddress());
+						System.out.println("Client "+ 2 + "s host name is " + inetAddress2.getHostName());
+						System.out.println("Client "+ 2 + "s ip address is " + inetAddress2.getHostAddress());
 						
 						InetAddress inetAddress3 = player3.getInetAddress(); 
-						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress3.getHostName());
-						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress3.getHostAddress());
+						System.out.println("Client "+ 3 + "s host name is " + inetAddress3.getHostName());
+						System.out.println("Client "+ 3 + "s ip address is " + inetAddress3.getHostAddress());
 						
-					
+						
 						new Thread(new HandleaSession(player1, player2, player3)).start();
+						
 					}
 				
 				} catch (IOException e) {
