@@ -8,11 +8,13 @@ import java.net.Socket;
 public class QuizServer {
 	
 	static int clientNumber = 0;
+	static HandleaClient players[] = new HandleaClient[3];
+	static boolean isRunning = false;
 	 public static void main(String [] args) {
 		 new Thread( () ->{
 					
 				try {
-					ServerSocket serverSocket = new ServerSocket(8000);
+					ServerSocket serverSocket = new ServerSocket(8300);
 					while (true) {
 					
 						Socket client = serverSocket.accept();
@@ -29,19 +31,40 @@ public class QuizServer {
 						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress1.getHostAddress());
 						
 						
-						new Thread(new HandleaClient(client, clientNumber)).start();
+						players[clientNumber-1] = new HandleaClient(client, clientNumber);
+						
+						new Thread(players[clientNumber-1]).start();
 						
 					}
+					
 				
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		}).start();
+		 
+		 /*
+		 if (players.length >= 3 && !isRunning) {
+			 HandleaSession a = new HandleaSession(players);
+				new Thread(a).start();
+				isRunning = true;
+			} else {
+				isRunning = false;
+			}
+		 */
+
+		 
+
+		 
+		 
 	}// end of main bracket
 	 
 	 public static int getClientNumber() {
 		 return clientNumber;
+	 }
+	 public static void decreasePlayerCount() {
+		 clientNumber--;
 	 }
 		
 }//end class bracket

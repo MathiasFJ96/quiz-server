@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class HandleaClient implements Runnable{
-	private Socket socket;
+	public Socket socket;
 	private String name;
 	private int playerCount;
+	private int noget;
 	
 	public HandleaClient(Socket socket, int client) {
 		this.socket = socket;
@@ -25,14 +26,22 @@ public class HandleaClient implements Runnable{
 			System.out.println("players in session: "+playerCount);
 			while (true) {
 					
-			if 	(QuizServer.getClientNumber() > playerCount) {
+			if 	(QuizServer.getClientNumber() != playerCount) {
+				playerCount = QuizServer.getClientNumber();
 				System.out.println("Player joined the session. Players in session: "+QuizServer.getClientNumber());
-				playerCount++;
+				
 			}
 			
+			noget = inputFromClient.readInt();
+			System.out.println(noget);
+			if(noget == 1) {
 				
+				System.out.println("ja!!! jeg vil gerne spille");
 				
-			
+			}  else {
+				socket.close();
+				QuizServer.decreasePlayerCount();
+			}
 			
 		
 			}
