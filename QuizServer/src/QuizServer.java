@@ -11,6 +11,7 @@ public class QuizServer {
 	static HandleaClient players[] = new HandleaClient[3];
 	static boolean isRunning = false;
 	 public static void main(String [] args) {
+		 
 		 new Thread( () ->{
 					
 				try {
