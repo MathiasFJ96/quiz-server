@@ -2,11 +2,11 @@
 public class Question {
 	
 	public String QuizText;
-	public String OptionA;
-	public String OptionB;
-	public String OptionC;
-	public String OptionD;
-	public String Answer;
+	public String A;
+	public String B;
+	public String C;
+	public String D;
+	public String Ans;
 	
 	public Question() {
 	}
