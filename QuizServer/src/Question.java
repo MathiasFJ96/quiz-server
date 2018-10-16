@@ -1,5 +1,25 @@
 
 public class Question {
+	
+	public String QuizText;
+	public String OptionA;
+	public String OptionB;
+	public String OptionC;
+	public String OptionD;
+	public String Answer;
+	
+	public Question() {
+	}
+	
+	/*public String[] QuestionText = {"What is the capital of Denmark?", "How old is the Earth?", "5 multiplied by 4 is what?", "What is the name of the four nucleobases in DNA?",
+			"What is Supermans alter ego?", "Who is the current president of the United States of America?", "How many strings does a guitar have?",
+			"How fast are you usually allowed to drive within the city limits?", "Which of these sports do NOT use a racket", "Does the moon rotate?"};
+	
+	public String[] PosAnswerQ1 = {"Olso", "Rekjavik", "Copenhagen", "London"};
+	public String[] PosAnswerQ2 = {"4.5 billion years old", "3.5 billion years old","4 billion years old","5 billion years old"};
+	
+	public String[]
+	
 	//Make question array with answer options and correct answer
 	
 	/*Question 1: What is the capital of Denmark
@@ -50,7 +70,7 @@ public class Question {
 		C: 30 km/t
 		D: 40 km/t
 	
-	Question 9: Which of these sports do NOT use a raquet
+	Question 9: Which of these sports do NOT use a racket
 		A: Polo - correct
 		B: Badminton
 		C: Squash
