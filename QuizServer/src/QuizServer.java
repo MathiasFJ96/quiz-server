@@ -9,6 +9,7 @@ public class QuizServer {
 	
 	static int clientNumber = 0;
 	 public static void main(String [] args) {
+		 
 		 new Thread( () ->{
 					
 				try {

@@ -16,4 +16,12 @@ public class Question {
 		this.D = D;
 		this.Ans = Ans;
 	}
+	
+	public void PrintQuestion() {
+		System.out.println(QuizText);
+		System.out.println("A: " +A);
+		System.out.println("B: " +B);
+		System.out.println("C: " +C);
+		System.out.println("D: " +D);
+	}
 }

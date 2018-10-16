@@ -12,6 +12,9 @@ public class QuestionDB {
 		Question Question8 = new Question("How many km/h are you typically allowed to drive within the city limits?","50","60","30","40","50");
 		Question Question9 = new Question("Which of these sports do NOT use a racket?","Polo","Badminton","Squash","Tennis","Polo");
 		Question Question10 = new Question("Does the moon rotate?","No","Yes, but only during the day","Yes","Yes, but only during summer","No");
-
+	
+		Question1.PrintQuestion();
 	}
+
+
 }
