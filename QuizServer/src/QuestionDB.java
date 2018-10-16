@@ -13,8 +13,5 @@ public class QuestionDB implements java.io.Serializable{
 		Question Question9 = new Question("Which of these sports do NOT use a racket?","Polo","Badminton","Squash","Tennis","Polo");
 		Question Question10 = new Question("Does the moon rotate?","No","Yes, but only during the day","Yes","Yes, but only during summer","No");
 	
-		
 	}
-
-
 }
