@@ -1,6 +1,6 @@
 
 public class Question {
-	int a = 1;
+	//Make question array with answer options and correct answer
 	
 	/*Question 1: What is the capital of Denmark
 		A: Oslo

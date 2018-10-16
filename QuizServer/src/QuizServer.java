@@ -22,6 +22,10 @@ public class QuizServer {
 						Socket player2 = serverSocket.accept();
 						
 						new DataOutputStream(player2.getOutputStream()).writeInt(2);
+						
+						Socket player3 = serverSocket.accept();
+						
+						new DataOutputStream(player3.getOutputStream()).writeInt(3);
 				
 						System.out.println("ServerStarted");
 						clientNumber++;
@@ -35,8 +39,12 @@ public class QuizServer {
 						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress2.getHostName());
 						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress2.getHostAddress());
 						
+						InetAddress inetAddress3 = player3.getInetAddress(); 
+						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress3.getHostName());
+						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress3.getHostAddress());
+						
 					
-						new Thread(new HandleaSession(player1, player2)).start();
+						new Thread(new HandleaSession(player1, player2, player3)).start();
 					}
 				
 				} catch (IOException e) {
@@ -53,14 +61,18 @@ public class QuizServer {
 class HandleaSession implements Runnable{
 	Socket player1;
 	Socket player2;
+	Socket player3;
 	DataInputStream inputFromPlayer1;
 	DataOutputStream outPutToPlayer1;
 	DataInputStream inputFromPlayer2;
 	DataOutputStream outPutToPlayer2;
+	DataInputStream inputFromPlayer3;
+	DataOutputStream outPutToPlayer3;
 	
-	HandleaSession(Socket player1, Socket player2){
+	HandleaSession(Socket player1, Socket player2, Socket player3){
 		this.player1 = player1;
 		this.player2 = player2;
+		this.player3 = player3;
 	}
 	
 	@Override
@@ -72,6 +84,9 @@ class HandleaSession implements Runnable{
 			
 			inputFromPlayer2 = new DataInputStream(player2.getInputStream());
 			outPutToPlayer2 = new DataOutputStream(player2.getOutputStream());
+			
+			inputFromPlayer3 = new DataInputStream(player3.getInputStream());
+			outPutToPlayer3 = new DataOutputStream(player3.getOutputStream());
 			
 			while(true) {
 				
