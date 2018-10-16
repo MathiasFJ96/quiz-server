@@ -1,5 +1,5 @@
 
-public class QuestionDB {
+public class QuestionDB implements java.io.Serializable{
 
 	public static void main(String [] args) {
 		Question Question1 = new Question("What is the capital of Denmark?","Olso", "Rekjavik", "Copenhagen", "London","Copenhagen");
@@ -13,7 +13,7 @@ public class QuestionDB {
 		Question Question9 = new Question("Which of these sports do NOT use a racket?","Polo","Badminton","Squash","Tennis","Polo");
 		Question Question10 = new Question("Does the moon rotate?","No","Yes, but only during the day","Yes","Yes, but only during summer","No");
 	
-		Question1.PrintQuestion();
+		
 	}
 
 

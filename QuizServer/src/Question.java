@@ -1,5 +1,5 @@
 
-public class Question {
+public class Question implements java.io.Serializable {
 	
 	public String QuizText;
 	public String A;
@@ -23,5 +23,9 @@ public class Question {
 		System.out.println("B: " +B);
 		System.out.println("C: " +C);
 		System.out.println("D: " +D);
+	}
+	
+	public void CorrectAnswer() {
+		System.out.println("The correct answer is: " +Ans);
 	}
 }
