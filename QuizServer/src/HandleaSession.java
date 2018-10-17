@@ -1,28 +1,27 @@
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class HandleaSession implements Runnable{
 
-	private HandleaClient playersInSession[];
+	private ArrayList<HandleaClient> players = new ArrayList<HandleaClient>();
+	private int playersInSession;
 	
-	public HandleaSession(HandleaClient playersInSession[]){
-		//for (int i = 0; i<players.length; i++) {
-		this.playersInSession = playersInSession;
+	public HandleaSession(ArrayList<HandleaClient> players){
+		
+		this.players = players;
+		this.playersInSession = this.players.size();
 		
 	}
 	
 	@Override
 	public void run() {
 		try {
-			//input and output streams from clients
-			//inputFromPlayer1 = new DataInputStream(player1.getInputStream());
-			//outPutToPlayer1 = new DataOutputStream(player1.getOutputStream());
+		
 			
-			for (HandleaClient item : playersInSession ) {
-				new DataInputStream(item.socket.getInputStream());
-			}
+			players.get(1).inputFromClient.readInt();
+			players.get(1).outputToClient.writeInt(1);
 			
 			while(true) {
 				

@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class QuizServer {
 	
 	static int clientNumber = 0;
-	static HandleaClient players[] = new HandleaClient[3];
-	static boolean isRunning = false;
-	 public static void main(String [] args) {
+	static ArrayList<HandleaClient> players = new ArrayList<HandleaClient>();
+	public static void main(String [] args) {
 		 
 		 new Thread( () ->{
 					
@@ -32,9 +32,8 @@ public class QuizServer {
 						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress1.getHostAddress());
 						
 						
-						players[clientNumber-1] = new HandleaClient(client, clientNumber);
 						
-						new Thread(players[clientNumber-1]).start();
+						new Thread(new HandleaClient(client, clientNumber)).start();
 						
 					}
 					
@@ -45,15 +44,7 @@ public class QuizServer {
 				}
 		}).start();
 		 
-		 /*
-		 if (players.length >= 3 && !isRunning) {
-			 HandleaSession a = new HandleaSession(players);
-				new Thread(a).start();
-				isRunning = true;
-			} else {
-				isRunning = false;
-			}
-		 */
+		
 
 		 
 
@@ -66,6 +57,16 @@ public class QuizServer {
 	 }
 	 public static void decreasePlayerCount() {
 		 clientNumber--;
+	 }
+	 
+	 public static void addAPlayertoSession(HandleaClient s) {
+		 players.add(s);
+		 System.out.println(players);
+	 }
+	 
+	 public static void createSession() {
+		new Thread(new HandleaSession(players)).start();
+
 	 }
 		
 }//end class bracket

@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class HandleaClient implements Runnable{
+	DataInputStream inputFromClient;
+	DataOutputStream outputToClient;
 	public Socket socket;
 	private String name;
 	private int playerCount;
@@ -37,6 +39,7 @@ public class HandleaClient implements Runnable{
 			if(noget == 1) {
 				
 				System.out.println("ja!!! jeg vil gerne spille");
+				QuizServer.addAPlayertoSession(this);
 				
 			}  else {
 				socket.close();
