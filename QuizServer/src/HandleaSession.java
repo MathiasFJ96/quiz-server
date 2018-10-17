@@ -18,13 +18,11 @@ public class HandleaSession implements Runnable{
 	@Override
 	public void run() {
 		try {
-		
-			
+					
 			players.get(1).inputFromClient.readInt();
 			players.get(1).outputToClient.writeInt(1);
 			
 			while(true) {
-				
 				
 			} // end while bracket
 			

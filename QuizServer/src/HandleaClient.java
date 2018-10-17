@@ -13,7 +13,7 @@ public class HandleaClient implements Runnable{
 	
 	public HandleaClient(Socket socket, int client) {
 		this.socket = socket;
-		this.name = "player"+client;
+		this.name = "player "+client;
 		this.playerCount = client;
 		
 	}
