@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class QuizServer {
 	
 	static int clientNumber = 0;
-	static ArrayList<HandleaClient> players = new ArrayList<HandleaClient>();
+	static ArrayList<HandleAClient> players = new ArrayList<HandleAClient>();
 	public static void main(String [] args) {
 		 
 		 new Thread( () ->{
@@ -23,32 +23,24 @@ public class QuizServer {
 						new DataOutputStream(client.getOutputStream()).writeInt(1);
 						
 				
-						System.out.println("Server loby started");
+						System.out.println("Server lobby started");
 						clientNumber++;
 						
 						
 						InetAddress inetAddress1 = client.getInetAddress(); 
 						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress1.getHostName());
 						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress1.getHostAddress());
-						
-						
-						
-						new Thread(new HandleaClient(client, clientNumber)).start();
+												
+						new Thread(new HandleAClient(client, clientNumber)).start();
 						
 					}
-					
-				
+								
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 		}).start();
-		 
-		
-
-		 
-
-		 
+		  
 		 
 	}// end of main bracket
 	 
@@ -59,7 +51,7 @@ public class QuizServer {
 		 clientNumber--;
 	 }
 	 
-	 public static void addAPlayertoSession(HandleaClient s) {
+	 public static void addPlayertoSession(HandleAClient s) {
 		 players.add(s);
 		 System.out.println(players);
 	 }

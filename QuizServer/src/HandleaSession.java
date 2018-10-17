@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 public class HandleaSession implements Runnable{
 
-	private ArrayList<HandleaClient> players = new ArrayList<HandleaClient>();
+	private ArrayList<HandleAClient> players = new ArrayList<HandleAClient>();
 	private int playersInSession;
 	
-	public HandleaSession(ArrayList<HandleaClient> players){
+	public HandleaSession(ArrayList<HandleAClient> players){
 		
 		this.players = players;
 		this.playersInSession = this.players.size();

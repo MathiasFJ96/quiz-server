@@ -3,7 +3,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class HandleaClient implements Runnable{
+public class HandleAClient implements Runnable{
 	DataInputStream inputFromClient;
 	DataOutputStream outputToClient;
 	public Socket socket;
@@ -11,7 +11,7 @@ public class HandleaClient implements Runnable{
 	private int playerCount;
 	private int noget;
 	
-	public HandleaClient(Socket socket, int client) {
+	public HandleAClient(Socket socket, int client) {
 		this.socket = socket;
 		this.name = "player "+client;
 		this.playerCount = client;
@@ -39,7 +39,7 @@ public class HandleaClient implements Runnable{
 			if(noget == 1) {
 				
 				System.out.println("ja!!! jeg vil gerne spille");
-				QuizServer.addAPlayertoSession(this);
+				QuizServer.addPlayertoSession(this);
 				
 			}  else {
 				socket.close();
