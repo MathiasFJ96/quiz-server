@@ -37,9 +37,9 @@ public class HandleAClient implements Runnable{
 			noget = inputFromClient.readInt();
 			System.out.println(noget);
 			if(noget == 1) {
-				
+				//Er det ikke først her de bliver added til session? Istedet for i linie 33? Forvirret over hvad der står i sysout i linie 33 og 28 med. 
 				System.out.println("ja!!! jeg vil gerne spille");
-				QuizServer.addPlayertoSession(this);
+				QuizServer.addPlayerToSession(this);
 				
 			}  else {
 				socket.close();

@@ -51,7 +51,7 @@ public class QuizServer {
 		 clientNumber--;
 	 }
 	 
-	 public static void addPlayertoSession(HandleAClient s) {
+	 public static void addPlayerToSession(HandleAClient s) {
 		 players.add(s);
 		 System.out.println(players);
 	 }
