@@ -57,7 +57,7 @@ public class QuizServer {
 	 }
 	 
 	 public static void createSession() {
-		new Thread(new HandleaSession(players)).start();
+		new Thread(new HandleASession(players)).start();
 
 	 }
 		

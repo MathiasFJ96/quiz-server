@@ -3,12 +3,12 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class HandleaSession implements Runnable{
+public class HandleASession implements Runnable{
 
 	private ArrayList<HandleAClient> players = new ArrayList<HandleAClient>();
 	private int playersInSession;
 	
-	public HandleaSession(ArrayList<HandleAClient> players){
+	public HandleASession(ArrayList<HandleAClient> players){
 		
 		this.players = players;
 		this.playersInSession = this.players.size();
