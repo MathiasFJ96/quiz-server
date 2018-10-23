@@ -9,29 +9,51 @@ import java.util.ArrayList;
 public class QuizServer {
 	
 	static int clientNumber = 0;
-	static ArrayList<HandleAClient> players = new ArrayList<HandleAClient>();
 	public static void main(String [] args) {
 		 
 		 new Thread( () ->{
 					
 				try {
-					ServerSocket serverSocket = new ServerSocket(8300);
+					ServerSocket serverSocket = new ServerSocket(8200);
+					
 					while (true) {
 					
-						Socket client = serverSocket.accept();
-						
-						new DataOutputStream(client.getOutputStream()).writeInt(1);
-						
-				
-						System.out.println("Server lobby started");
+						Socket player1 = serverSocket.accept();
 						clientNumber++;
+						//player1's send integer so the client knows it is which number
+						new DataOutputStream(player1.getOutputStream()).writeInt(1);
 						
-						
-						InetAddress inetAddress1 = client.getInetAddress(); 
+						//address player 1
+						InetAddress inetAddress1 = player1.getInetAddress(); 
 						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress1.getHostName());
 						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress1.getHostAddress());
+						
+						
+						Socket player2 = serverSocket.accept();
+						clientNumber++;
+						//address player 2
+						InetAddress inetAddress2 = player2.getInetAddress(); 
+						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress2.getHostName());
+						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress2.getHostAddress());
+						
+						//player2's send integer so the client knows it is which number
+						new DataOutputStream(player2.getOutputStream()).writeInt(2);
+						
+						// player 3's socket
+						Socket player3 = serverSocket.accept();
+						clientNumber++;
+						
+						//player3's send integer so the client knows it is which number
+						new DataOutputStream(player3.getOutputStream()).writeInt(3);
+						
+						//address player 3
+						InetAddress inetAddress3 = player3.getInetAddress(); 
+						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress3.getHostName());
+						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress3.getHostAddress());
+						
 												
-						new Thread(new HandleAClient(client, clientNumber)).start();
+						new Thread(new HandleASession(player1, player2, player3)).start();
+						
 						
 					}
 								
@@ -43,23 +65,6 @@ public class QuizServer {
 		  
 		 
 	}// end of main bracket
-	 
-	 public static int getClientNumber() {
-		 return clientNumber;
-	 }
-	 public static void decreasePlayerCount() {
-		 clientNumber--;
-	 }
-	 
-	 public static void addPlayerToSession(HandleAClient s) {
-		 players.add(s);
-		 System.out.println(players);
-	 }
-	 
-	 public static void createSession() {
-		new Thread(new HandleASession(players)).start();
-
-	 }
 		
 }//end class bracket
 
