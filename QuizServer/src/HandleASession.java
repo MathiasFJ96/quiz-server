@@ -1,16 +1,14 @@
-import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class HandleASession implements Runnable{
 	
 	private Socket player1, player2, player3;
 	static int answer1, answer2, answer3;
+	static int scorePlayer1, scorePlayer2, scorePlayer3;
+	private static int questionNumber = 0;
 	
 	public HandleASession(Socket player1, Socket player2, Socket player3){
 		
@@ -57,9 +55,25 @@ public class HandleASession implements Runnable{
 				
 				//First question
 				sendQuestionNumber(outputToClient1, outputToClient2, outputToClient3);
+				scorePlayer1 = inputFromClient1.readInt();
+				scorePlayer2 = inputFromClient2.readInt();
+				scorePlayer3 = inputFromClient3.readInt();
 				
+				sendResults(outputToClient1, outputToClient2, outputToClient3);
 				
+				//Second question
+				sendQuestionNumber(outputToClient1, outputToClient2, outputToClient3);
+				scorePlayer1 += inputFromClient1.readInt();
+				scorePlayer2 += inputFromClient2.readInt();
+				scorePlayer3 += inputFromClient3.readInt();
 				
+				sendResults(outputToClient1, outputToClient2, outputToClient3);
+				
+				//third question
+				sendQuestionNumber(outputToClient1, outputToClient2, outputToClient3);
+				scorePlayer1 += inputFromClient1.readInt();
+				scorePlayer2 += inputFromClient2.readInt();
+				scorePlayer3 += inputFromClient3.readInt();
 				
 				
 				
@@ -72,12 +86,13 @@ public class HandleASession implements Runnable{
 	} // end run bracket
 	
 	void sendQuestionNumber(DataOutputStream Objectplayer1, DataOutputStream Objectplayer2, DataOutputStream Objectplayer3) {
-		int questionNumber = 0;
+		
 		try {
 			Objectplayer1.writeInt(questionNumber);
 			Objectplayer2.writeInt(questionNumber);
 			Objectplayer3.writeInt(questionNumber);
 			questionNumber++;
+			System.out.println("the question number" + questionNumber);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -85,8 +100,56 @@ public class HandleASession implements Runnable{
 		}
 	}
 	
-	void sendResults() {
-		
+	void sendResults(DataOutputStream outputToClient1, DataOutputStream outputToClient2, DataOutputStream outputToClient3) {
+		try {
+		if(scorePlayer1 > scorePlayer2 && scorePlayer1 > scorePlayer3) {
+			//player 1 is leading
+			outputToClient1.writeInt(1);
+			outputToClient2.writeInt(1);
+			outputToClient3.writeInt(1);
+			
+			
+			// sending player1's score
+			outputToClient1.writeInt(scorePlayer1);
+			outputToClient2.writeInt(scorePlayer1);
+			outputToClient3.writeInt(scorePlayer1);
+			
+		} else if (scorePlayer2 > scorePlayer1 && scorePlayer2 > scorePlayer3) {
+			//player 2 is leading
+			outputToClient1.writeInt(2);
+			outputToClient2.writeInt(2);
+			outputToClient3.writeInt(2);
+			
+			// sending player2's score
+			outputToClient1.writeInt(scorePlayer2);
+			outputToClient2.writeInt(scorePlayer2);
+			outputToClient3.writeInt(scorePlayer2);
+			
+		}else if (scorePlayer3 > scorePlayer2 && scorePlayer3 > scorePlayer1) {
+			//player 3 is leading
+			outputToClient1.writeInt(3);
+			outputToClient2.writeInt(3);
+			outputToClient3.writeInt(3);
+			
+			//sending player 3's Score
+			outputToClient1.writeInt(scorePlayer3);
+			outputToClient2.writeInt(scorePlayer3);
+			outputToClient3.writeInt(scorePlayer3);
+			
+		} else if (scorePlayer1 == scorePlayer2 || scorePlayer1 == scorePlayer3 || scorePlayer2 == scorePlayer3) {
+			//multiple players are leading
+			outputToClient1.writeInt(4);
+			outputToClient2.writeInt(4);
+			outputToClient3.writeInt(4);
+			
+			outputToClient1.writeInt(scorePlayer3);
+			outputToClient2.writeInt(scorePlayer3);
+			outputToClient3.writeInt(scorePlayer3);
+		}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	void winCondition() {
