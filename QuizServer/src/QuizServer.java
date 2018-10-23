@@ -1,5 +1,5 @@
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -19,7 +19,7 @@ public class QuizServer {
 						Socket player1 = serverSocket.accept();
 						clientNumber++;
 						//player1's send integer so the client knows it is which number
-						new ObjectOutputStream(player1.getOutputStream()).writeInt(1);
+						new DataOutputStream(player1.getOutputStream()).writeInt(1);
 						
 						//address player 1
 						InetAddress inetAddress1 = player1.getInetAddress(); 
@@ -30,7 +30,7 @@ public class QuizServer {
 						Socket player2 = serverSocket.accept();
 						clientNumber++;
 						//player2's send integer so the client knows it is which number
-						new ObjectOutputStream(player2.getOutputStream()).writeInt(2);
+						new DataOutputStream(player2.getOutputStream()).writeInt(2);
 						//address player 2
 						InetAddress inetAddress2 = player2.getInetAddress(); 
 						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress2.getHostName());
@@ -42,7 +42,7 @@ public class QuizServer {
 						clientNumber++;
 						
 						//player3's send integer so the client knows it is which number
-						new ObjectOutputStream(player3.getOutputStream()).writeInt(3);
+						new DataOutputStream(player3.getOutputStream()).writeInt(3);
 						
 						//address player 3
 						InetAddress inetAddress3 = player3.getInetAddress(); 
