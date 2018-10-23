@@ -1,13 +1,16 @@
+import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class HandleASession implements Runnable{
 	
 	private Socket player1, player2, player3;
-	static int answer1, answer2, answer3;
+	static String answer1, answer2, answer3;
 	
 	public HandleASession(Socket player1, Socket player2, Socket player3){
 		
@@ -20,26 +23,25 @@ public class HandleASession implements Runnable{
 	public void run() {
 		try {
 					
-			DataInputStream inputFromClient1 = new DataInputStream(player1.getInputStream());
-			DataOutputStream outputToClient1 = new DataOutputStream(player1.getOutputStream());
+			ObjectInputStream inputFromClient1 = new ObjectInputStream(player1.getInputStream());
+			ObjectInputStream inputFromClient2 = new ObjectInputStream(player2.getInputStream());
+			ObjectInputStream inputFromClient3 = new ObjectInputStream(player3.getInputStream());
 			
-			DataInputStream inputFromClient2 = new DataInputStream(player2.getInputStream());
-			DataOutputStream outputToClient2 = new DataOutputStream(player2.getOutputStream());
-			
-			DataInputStream inputFromClient3 = new DataInputStream(player3.getInputStream());
-			DataOutputStream outputToClient3 = new DataOutputStream(player3.getOutputStream());
+			ObjectOutputStream outputToClient1 = new ObjectOutputStream(player1.getOutputStream());
+			ObjectOutputStream outputToClient2 = new ObjectOutputStream(player2.getOutputStream());
+			ObjectOutputStream outputToClient3 = new ObjectOutputStream(player3.getOutputStream());
 			
 			while(true) {			
 				
 				//read input from the clients
-				answer1 = inputFromClient1.readInt();
-				answer2 = inputFromClient2.readInt();
-				answer3 = inputFromClient3.readInt();
+				answer1 = (String) inputFromClient1.readObject();
+				answer2 = (String) inputFromClient2.readObject();
+				answer3 = (String) inputFromClient3.readObject();
 				
 				
+				System.out.println(answer1 + " " + answer2 + " " + answer3);
 				
-				System.out.println(answer1+ " " + answer2 + " " + answer3 );
-				if(answer1 == 1 && answer2 == 1 && answer3 == 1) {
+				if(answer1.equals("y") && answer2.equals("y") && answer3.equals("y")) {
 					System.out.println("player1 want to play");
 					System.out.println("player2 want to play");
 					System.out.println("player3 want to play");
@@ -53,14 +55,44 @@ public class HandleASession implements Runnable{
 				
 				//game code under this
 				
+				//First question
+				sendQuestion(outputToClient1, outputToClient2, outputToClient3);
+				
+				
+				
+				
 				
 				
 			} // end while bracket
 			
 		} catch(IOException ex) {
 			ex.printStackTrace();
-		}	
+		} catch(ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
+		
 		
 	} // end run bracket
+	
+	void sendQuestion(ObjectOutputStream Objectplayer1, ObjectOutputStream Objectplayer2, ObjectOutputStream Objectplayer3) {
+		//int questionNumber = 1;
+		try {
+			Objectplayer1.writeObject(QuestionDB.Question1);
+			Objectplayer2.writeObject(QuestionDB.Question1);
+			Objectplayer3.writeObject(QuestionDB.Question1);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	void sendResults() {
+		
+	}
+	
+	void winCondition() {
+		
+	}
 	
 }// end of class bracket
