@@ -14,9 +14,9 @@ public class HandleASession implements Runnable{
 	private DataInputStream inputFromClient2;
 	private DataInputStream inputFromClient3;
 	
-	DataOutputStream outputToClient1;
-	DataOutputStream outputToClient2;
-	DataOutputStream outputToClient3;
+	private DataOutputStream outputToClient1;
+	private DataOutputStream outputToClient2;
+	private DataOutputStream outputToClient3;
 	
 	public HandleASession(Socket player1, Socket player2, Socket player3){
 		
