@@ -6,9 +6,17 @@ import java.net.Socket;
 public class HandleASession implements Runnable{
 	
 	private Socket player1, player2, player3;
-	static int answer1, answer2, answer3;
-	static int scorePlayer1, scorePlayer2, scorePlayer3;
-	private static int questionNumber = 0;
+	private int answer1, answer2, answer3;
+	private int scorePlayer1, scorePlayer2, scorePlayer3;
+	private int questionNumber = 0;
+	
+	private DataInputStream inputFromClient1;
+	private DataInputStream inputFromClient2;
+	private DataInputStream inputFromClient3;
+	
+	DataOutputStream outputToClient1;
+	DataOutputStream outputToClient2;
+	DataOutputStream outputToClient3;
 	
 	public HandleASession(Socket player1, Socket player2, Socket player3){
 		
@@ -21,13 +29,13 @@ public class HandleASession implements Runnable{
 	public void run() {
 		try {
 					
-			DataInputStream inputFromClient1 = new DataInputStream(player1.getInputStream());
-			DataInputStream inputFromClient2 = new DataInputStream(player2.getInputStream());
-			DataInputStream inputFromClient3 = new DataInputStream(player3.getInputStream());
+			inputFromClient1 = new DataInputStream(player1.getInputStream());
+			inputFromClient2 = new DataInputStream(player2.getInputStream());
+			inputFromClient3 = new DataInputStream(player3.getInputStream());
 			
-			DataOutputStream outputToClient1 = new DataOutputStream(player1.getOutputStream());
-			DataOutputStream outputToClient2 = new DataOutputStream(player2.getOutputStream());
-			DataOutputStream outputToClient3 = new DataOutputStream(player3.getOutputStream());
+			outputToClient1 = new DataOutputStream(player1.getOutputStream());
+			outputToClient2 = new DataOutputStream(player2.getOutputStream());
+			outputToClient3 = new DataOutputStream(player3.getOutputStream());
 			
 			while(true) {			
 				
@@ -85,12 +93,12 @@ public class HandleASession implements Runnable{
 		
 	} // end run bracket
 	
-	void sendQuestionNumber(DataOutputStream Objectplayer1, DataOutputStream Objectplayer2, DataOutputStream Objectplayer3) {
+	private void sendQuestionNumber(DataOutputStream outputToClient1, DataOutputStream outputToClient2, DataOutputStream outputToClient3) {
 		
 		try {
-			Objectplayer1.writeInt(questionNumber);
-			Objectplayer2.writeInt(questionNumber);
-			Objectplayer3.writeInt(questionNumber);
+			outputToClient1.writeInt(questionNumber);
+			outputToClient2.writeInt(questionNumber);
+			outputToClient3.writeInt(questionNumber);
 			questionNumber++;
 			System.out.println("the question number" + questionNumber);
 			
@@ -100,7 +108,7 @@ public class HandleASession implements Runnable{
 		}
 	}
 	
-	void sendResults(DataOutputStream outputToClient1, DataOutputStream outputToClient2, DataOutputStream outputToClient3) {
+	private void sendResults(DataOutputStream outputToClient1, DataOutputStream outputToClient2, DataOutputStream outputToClient3) {
 		try {
 		if(scorePlayer1 > scorePlayer2 && scorePlayer1 > scorePlayer3) {
 			//player 1 is leading
