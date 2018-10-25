@@ -7,45 +7,54 @@ import java.net.Socket;
 public class QuizServer {
 	
 	static int clientNumber = 0;
+	static ServerSocket serverSocket;
+	
+	private static Socket player1;
+	private static Socket player2;
+	private static Socket player3;
+	
+	private static InetAddress inetAddress1; 
+	private static InetAddress inetAddress2;
+	private static InetAddress inetAddress3;
 	public static void main(String [] args) {
 		 
 		 new Thread( () ->{
 					
 				try {
-					ServerSocket serverSocket = new ServerSocket(8200);
+					serverSocket = new ServerSocket(8200);
 					
 					while (true) {
 					
-						Socket player1 = serverSocket.accept();
+						player1 = serverSocket.accept();
 						clientNumber++;
 						//player1's send integer so the client knows it is which number
 						new DataOutputStream(player1.getOutputStream()).writeInt(1);
 						
 						//address player 1
-						InetAddress inetAddress1 = player1.getInetAddress(); 
+						inetAddress1 = player1.getInetAddress(); 
 						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress1.getHostName());
 						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress1.getHostAddress());
 						
 						
-						Socket player2 = serverSocket.accept();
+						player2 = serverSocket.accept();
 						clientNumber++;
 						//player2's send integer so the client knows it is which number
 						new DataOutputStream(player2.getOutputStream()).writeInt(2);
 						//address player 2
-						InetAddress inetAddress2 = player2.getInetAddress(); 
+						inetAddress2 = player2.getInetAddress(); 
 						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress2.getHostName());
 						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress2.getHostAddress());
 						
 						
 						// player 3's socket
-						Socket player3 = serverSocket.accept();
+						player3 = serverSocket.accept();
 						clientNumber++;
 						
 						//player3's send integer so the client knows it is which number
 						new DataOutputStream(player3.getOutputStream()).writeInt(3);
 						
 						//address player 3
-						InetAddress inetAddress3 = player3.getInetAddress(); 
+						inetAddress3 = player3.getInetAddress(); 
 						System.out.println("Client "+ clientNumber + "s host name is " + inetAddress3.getHostName());
 						System.out.println("Client "+ clientNumber + "s ip address is " + inetAddress3.getHostAddress());
 						
