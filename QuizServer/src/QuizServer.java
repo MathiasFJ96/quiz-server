@@ -6,8 +6,8 @@ import java.net.Socket;
 
 public class QuizServer {
 	
-	static int clientNumber = 0;
-	static ServerSocket serverSocket;
+	private static int clientNumber = 0;
+	private static ServerSocket serverSocket;
 	
 	private static Socket player1;
 	private static Socket player2;
