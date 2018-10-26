@@ -78,7 +78,7 @@ public class HandleASession implements Runnable{
 					
 					sendResults(outputToClient1, outputToClient2, outputToClient3);
 					
-					winCondition();
+					winCondition(outputToClient1, outputToClient2, outputToClient3);
 					
 				}
 				
@@ -181,9 +181,23 @@ public class HandleASession implements Runnable{
 		}
 	}
 	
-	void winCondition() {
+	void winCondition(DataOutputStream outputToClient1, DataOutputStream outputToClient2, DataOutputStream outputToClient3) {
+		try {
+		outputToClient1.writeInt(scorePlayer2);
+		outputToClient1.writeInt(scorePlayer3);
+		
+		outputToClient2.writeInt(scorePlayer1);
+		outputToClient2.writeInt(scorePlayer3);
+		
+		outputToClient3.writeInt(scorePlayer1);
+		outputToClient3.writeInt(scorePlayer2);
+		
 		if (scorePlayer1 == 5 || scorePlayer2 == 5 || scorePlayer3 == 5)
 			playing = false;
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }// end of class bracket
