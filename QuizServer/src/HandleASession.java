@@ -2,13 +2,14 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Random;
 
 public class HandleASession implements Runnable{
 	
 	private Socket player1, player2, player3;
 	private int answer1, answer2, answer3;
 	private int scorePlayer1, scorePlayer2, scorePlayer3;
-	private int questionNumber[] = {1,2,3,4,5,6,7,8,9,10};
+	private int questionNumber[] = {0,1,2,3,4,5,6,7,8,9};
 	private int currentQ = 0;
 	
 	private boolean playing;
@@ -33,10 +34,12 @@ public class HandleASession implements Runnable{
 		try {
 			//shuffle and print question order in the console.
 			shuffleQNumber();
-			System.out.println("Question order: ");
+			
+			/*System.out.println("Question order: ");
 			for (int i = 0; i<questionNumber.length; i++) {
 				System.out.println(questionNumber[i]);
-			}
+			}*/
+			
 			System.out.println("");
 			
 			inputFromClient1 = new DataInputStream(player1.getInputStream());
@@ -105,7 +108,7 @@ public class HandleASession implements Runnable{
 			int placeholder;
 			int rand;
 			placeholder = questionNumber[i];
-			rand = (int) (Math.random()*10);
+			rand =  ((int) (Math.random()*10));
 			questionNumber[i] = questionNumber[rand];
 			questionNumber[rand] = placeholder;
 		}
