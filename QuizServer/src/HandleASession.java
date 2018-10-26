@@ -13,6 +13,7 @@ public class HandleASession implements Runnable{
 	private int currentQ = 0;
 	
 	private boolean playing;
+	private boolean connected;
 	
 	private DataInputStream inputFromClient1;
 	private DataInputStream inputFromClient2;
@@ -33,13 +34,13 @@ public class HandleASession implements Runnable{
 	public void run() {
 		try {
 			//shuffle and print question order in the console.
-			shuffleQNumber();
+			
 			
 			/*System.out.println("Question order: ");
 			for (int i = 0; i<questionNumber.length; i++) {
 				System.out.println(questionNumber[i]);
 			}*/
-			
+			connected = true;
 			System.out.println("");
 			
 			inputFromClient1 = new DataInputStream(player1.getInputStream());
@@ -50,8 +51,10 @@ public class HandleASession implements Runnable{
 			outputToClient2 = new DataOutputStream(player2.getOutputStream());
 			outputToClient3 = new DataOutputStream(player3.getOutputStream());
 			
-			while(true) {			
-				
+			while(connected) {			
+				playing =true;
+				shuffleQNumber();
+				currentQ = 0;
 				//read input from the clients
 				answer1 = inputFromClient1.readInt();
 				answer2 = inputFromClient2.readInt();
@@ -65,14 +68,30 @@ public class HandleASession implements Runnable{
 					System.out.println("player2 want to play");
 					System.out.println("player3 want to play");
 					System.out.println("session started");
-				} else {
-					player1.close();
-					player2.close();
-					player3.close();
+					outputToClient1.writeInt(1);
+					outputToClient2.writeInt(1);
+					outputToClient3.writeInt(1);
+				} else if (answer1 == 2 || answer2 == 2 || answer3 == 2){
+					//player1.close();
+					//player2.close();
+					//player3.close();
+					outputToClient1.writeInt(2);
+					outputToClient2.writeInt(2);
+					outputToClient3.writeInt(2);
+					System.out.println("closing now");
+					Thread.sleep(1000);
+					connected = false;
+					playing = false;
+					QuizServer.closeSocket();
+					
+					
+					//System.exit(1);
+					
+					
 
 				}
 				
-				playing =true;
+				
 				
 				//game code
 				while (playing) {
@@ -89,6 +108,9 @@ public class HandleASession implements Runnable{
 			
 		} catch(IOException ex) {
 			ex.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} 
 		
 	} // end run bracket
@@ -136,7 +158,7 @@ public class HandleASession implements Runnable{
 			outputToClient1.writeInt(1);
 			outputToClient2.writeInt(1);
 			outputToClient3.writeInt(1);
-			
+			System.out.println("1");
 			
 			// sending player1's score
 			outputToClient1.writeInt(scorePlayer1);
@@ -148,7 +170,7 @@ public class HandleASession implements Runnable{
 			outputToClient1.writeInt(2);
 			outputToClient2.writeInt(2);
 			outputToClient3.writeInt(2);
-			
+			System.out.println("2");
 			// sending player2's score
 			outputToClient1.writeInt(scorePlayer2);
 			outputToClient2.writeInt(scorePlayer2);
@@ -159,17 +181,49 @@ public class HandleASession implements Runnable{
 			outputToClient1.writeInt(3);
 			outputToClient2.writeInt(3);
 			outputToClient3.writeInt(3);
+			System.out.println("3");
 			
 			//sending player 3's Score
 			outputToClient1.writeInt(scorePlayer3);
 			outputToClient2.writeInt(scorePlayer3);
 			outputToClient3.writeInt(scorePlayer3);
 			
-		} else if (scorePlayer1 == scorePlayer2 || scorePlayer1 == scorePlayer3 || scorePlayer2 == scorePlayer3) {
+		} else if (scorePlayer1 == scorePlayer2 && scorePlayer1 == scorePlayer3 && scorePlayer2 == scorePlayer3) {
 			//multiple players are leading
 			outputToClient1.writeInt(4);
 			outputToClient2.writeInt(4);
 			outputToClient3.writeInt(4);
+			System.out.println("4");
+			
+			outputToClient1.writeInt(scorePlayer3);
+			outputToClient2.writeInt(scorePlayer3);
+			outputToClient3.writeInt(scorePlayer3);
+		} else if (scorePlayer1 == scorePlayer2 && scorePlayer1 > scorePlayer3) {
+			//multiple players are leading
+			outputToClient1.writeInt(4);
+			outputToClient2.writeInt(4);
+			outputToClient3.writeInt(4);
+			System.out.println("5");
+			
+			outputToClient1.writeInt(scorePlayer1);
+			outputToClient2.writeInt(scorePlayer1);
+			outputToClient3.writeInt(scorePlayer1);
+		} else if ( scorePlayer1 == scorePlayer3 && scorePlayer1 > scorePlayer2) {
+			//multiple players are leading
+			outputToClient1.writeInt(4);
+			outputToClient2.writeInt(4);
+			outputToClient3.writeInt(4);
+			System.out.println("6");
+			
+			outputToClient1.writeInt(scorePlayer3);
+			outputToClient2.writeInt(scorePlayer3);
+			outputToClient3.writeInt(scorePlayer3);
+		} else if (scorePlayer2 == scorePlayer3 && scorePlayer2 > scorePlayer1) {
+			//multiple players are leading
+			outputToClient1.writeInt(4);
+			outputToClient2.writeInt(4);
+			outputToClient3.writeInt(4);
+			System.out.println("7");
 			
 			outputToClient1.writeInt(scorePlayer3);
 			outputToClient2.writeInt(scorePlayer3);

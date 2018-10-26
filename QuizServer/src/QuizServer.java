@@ -21,7 +21,7 @@ public class QuizServer {
 		 new Thread( () ->{
 					
 				try {
-					serverSocket = new ServerSocket(8400);
+					serverSocket = new ServerSocket(8900);
 					
 					while (true) {
 					
@@ -70,7 +70,14 @@ public class QuizServer {
 		  
 		 
 	}// end of main bracket
-		
+	public static void closeSocket() {
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }//end class bracket
 
 
