@@ -78,6 +78,7 @@ public class HandleASession implements Runnable{
 					
 					sendResults(outputToClient1, outputToClient2, outputToClient3);
 					
+					winCondition();
 					
 				}
 				
@@ -172,8 +173,7 @@ public class HandleASession implements Runnable{
 			outputToClient3.writeInt(scorePlayer3);
 		}
 		
-		if (scorePlayer1 == 5 || scorePlayer2 == 5 || scorePlayer3 == 5)
-			playing = false;
+		
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -182,7 +182,8 @@ public class HandleASession implements Runnable{
 	}
 	
 	void winCondition() {
-		
+		if (scorePlayer1 == 5 || scorePlayer2 == 5 || scorePlayer3 == 5)
+			playing = false;
 	}
 	
 }// end of class bracket
