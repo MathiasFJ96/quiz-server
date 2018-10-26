@@ -11,6 +11,8 @@ public class HandleASession implements Runnable{
 	private int questionNumber[] = {1,2,3,4,5,6,7,8,9,10};
 	private int currentQ = 0;
 	
+	private boolean playing;
+	
 	private DataInputStream inputFromClient1;
 	private DataInputStream inputFromClient2;
 	private DataInputStream inputFromClient3;
@@ -67,31 +69,17 @@ public class HandleASession implements Runnable{
 
 				}
 				
-				//game code under this
+				playing =true;
 				
-				//First question
-				sendQuestionNumber(outputToClient1, outputToClient2, outputToClient3);
-				scorePlayer1 = inputFromClient1.readInt();
-				scorePlayer2 = inputFromClient2.readInt();
-				scorePlayer3 = inputFromClient3.readInt();
-				
-				sendResults(outputToClient1, outputToClient2, outputToClient3);
-				
-				//Second question
-				sendQuestionNumber(outputToClient1, outputToClient2, outputToClient3);
-				scorePlayer1 += inputFromClient1.readInt();
-				scorePlayer2 += inputFromClient2.readInt();
-				scorePlayer3 += inputFromClient3.readInt();
-				
-				sendResults(outputToClient1, outputToClient2, outputToClient3);
-				
-				//third question
-				sendQuestionNumber(outputToClient1, outputToClient2, outputToClient3);
-				scorePlayer1 += inputFromClient1.readInt();
-				scorePlayer2 += inputFromClient2.readInt();
-				scorePlayer3 += inputFromClient3.readInt();
-				
-				
+				//game code
+				while (playing) {
+					sendQuestionNumber(outputToClient1, outputToClient2, outputToClient3);
+					readScore(inputFromClient1, inputFromClient2, inputFromClient3);
+					
+					sendResults(outputToClient1, outputToClient2, outputToClient3);
+					
+					
+				}
 				
 			} // end while bracket
 			
@@ -100,6 +88,16 @@ public class HandleASession implements Runnable{
 		} 
 		
 	} // end run bracket
+	
+	private void readScore(DataInputStream inoutFromClient1, DataInputStream inoutFromClient2, DataInputStream inoutFromClient3) {
+		try {
+		scorePlayer1 += inputFromClient1.readInt();
+		scorePlayer2 += inputFromClient2.readInt();
+		scorePlayer3 += inputFromClient3.readInt();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private void shuffleQNumber() {
 		for (int i = 0; i < questionNumber.length; i++) {
@@ -118,8 +116,8 @@ public class HandleASession implements Runnable{
 			outputToClient1.writeInt(questionNumber[currentQ]);
 			outputToClient2.writeInt(questionNumber[currentQ]);
 			outputToClient3.writeInt(questionNumber[currentQ]);
-			
 			System.out.println("the question number is " + questionNumber[currentQ]);
+			currentQ++;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -173,6 +171,10 @@ public class HandleASession implements Runnable{
 			outputToClient2.writeInt(scorePlayer3);
 			outputToClient3.writeInt(scorePlayer3);
 		}
+		
+		if (scorePlayer1 == 5 || scorePlayer2 == 5 || scorePlayer3 == 5)
+			playing = false;
+		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
