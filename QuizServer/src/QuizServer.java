@@ -21,7 +21,7 @@ public class QuizServer {
 		 new Thread( () ->{
 					
 				try {
-					serverSocket = new ServerSocket(8200);
+					serverSocket = new ServerSocket(8000);
 					
 					while (true) {
 					

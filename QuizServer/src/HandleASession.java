@@ -29,7 +29,14 @@ public class HandleASession implements Runnable{
 	@Override
 	public void run() {
 		try {
-					
+			//shuffle and print question order in the console.
+			shuffleQNumber();
+			System.out.println("Question order: ");
+			for (int i = 0; i<questionNumber.length; i++) {
+				System.out.println(questionNumber[i]);
+			}
+			System.out.println("");
+			
 			inputFromClient1 = new DataInputStream(player1.getInputStream());
 			inputFromClient2 = new DataInputStream(player2.getInputStream());
 			inputFromClient3 = new DataInputStream(player3.getInputStream());
@@ -61,7 +68,7 @@ public class HandleASession implements Runnable{
 				}
 				
 				//game code under this
-				shuffleQNumber();
+				
 				//First question
 				sendQuestionNumber(outputToClient1, outputToClient2, outputToClient3);
 				scorePlayer1 = inputFromClient1.readInt();
@@ -112,7 +119,7 @@ public class HandleASession implements Runnable{
 			outputToClient2.writeInt(questionNumber[currentQ]);
 			outputToClient3.writeInt(questionNumber[currentQ]);
 			
-			System.out.println("the question number is" + questionNumber[currentQ]);
+			System.out.println("the question number is " + questionNumber[currentQ]);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
