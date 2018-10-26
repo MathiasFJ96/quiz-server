@@ -95,9 +95,9 @@ public class HandleASession implements Runnable{
 	
 	private void readScore(DataInputStream inoutFromClient1, DataInputStream inoutFromClient2, DataInputStream inoutFromClient3) {
 		try {
-		scorePlayer1 += inputFromClient1.readInt();
-		scorePlayer2 += inputFromClient2.readInt();
-		scorePlayer3 += inputFromClient3.readInt();
+		scorePlayer1 = inputFromClient1.readInt();
+		scorePlayer2 = inputFromClient2.readInt();
+		scorePlayer3 = inputFromClient3.readInt();
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
