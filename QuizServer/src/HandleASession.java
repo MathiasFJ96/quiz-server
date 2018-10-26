@@ -8,7 +8,8 @@ public class HandleASession implements Runnable{
 	private Socket player1, player2, player3;
 	private int answer1, answer2, answer3;
 	private int scorePlayer1, scorePlayer2, scorePlayer3;
-	private int questionNumber = 0;
+	private int questionNumber[] = {1,2,3,4,5,6,7,8,9,10};
+	private int currentQ = 0;
 	
 	private DataInputStream inputFromClient1;
 	private DataInputStream inputFromClient2;
@@ -60,7 +61,7 @@ public class HandleASession implements Runnable{
 				}
 				
 				//game code under this
-				
+				shuffleQNumber();
 				//First question
 				sendQuestionNumber(outputToClient1, outputToClient2, outputToClient3);
 				scorePlayer1 = inputFromClient1.readInt();
@@ -93,14 +94,25 @@ public class HandleASession implements Runnable{
 		
 	} // end run bracket
 	
+	private void shuffleQNumber() {
+		for (int i = 0; i < questionNumber.length; i++) {
+			int placeholder;
+			int rand;
+			placeholder = questionNumber[i];
+			rand = (int) (Math.random()*10);
+			questionNumber[i] = questionNumber[rand];
+			questionNumber[rand] = placeholder;
+		}
+	}
+	
 	private void sendQuestionNumber(DataOutputStream outputToClient1, DataOutputStream outputToClient2, DataOutputStream outputToClient3) {
 		
 		try {
-			outputToClient1.writeInt(questionNumber);
-			outputToClient2.writeInt(questionNumber);
-			outputToClient3.writeInt(questionNumber);
-			questionNumber++;
-			System.out.println("the question number" + questionNumber);
+			outputToClient1.writeInt(questionNumber[currentQ]);
+			outputToClient2.writeInt(questionNumber[currentQ]);
+			outputToClient3.writeInt(questionNumber[currentQ]);
+			
+			System.out.println("the question number is" + questionNumber[currentQ]);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
