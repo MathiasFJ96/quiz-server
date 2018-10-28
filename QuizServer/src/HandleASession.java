@@ -115,7 +115,7 @@ public class HandleASession implements Runnable{
 		
 	} // end run bracket
 	
-	private void readScore(DataInputStream inoutFromClient1, DataInputStream inoutFromClient2, DataInputStream inoutFromClient3) {
+	private void readScore(DataInputStream inputFromClient1, DataInputStream inputFromClient2, DataInputStream inputFromClient3) {
 		try {
 		scorePlayer1 = inputFromClient1.readInt();
 		scorePlayer2 = inputFromClient2.readInt();
@@ -238,7 +238,7 @@ public class HandleASession implements Runnable{
 		}
 	}
 	
-	void winCondition(DataOutputStream outputToClient1, DataOutputStream outputToClient2, DataOutputStream outputToClient3) {
+	private void winCondition(DataOutputStream outputToClient1, DataOutputStream outputToClient2, DataOutputStream outputToClient3) {
 		try {
 		outputToClient1.writeInt(scorePlayer2);
 		outputToClient1.writeInt(scorePlayer3);
