@@ -33,13 +33,7 @@ public class HandleASession implements Runnable{
 	@Override
 	public void run() {
 		try {
-			//shuffle and print question order in the console.
 			
-			
-			/*System.out.println("Question order: ");
-			for (int i = 0; i<questionNumber.length; i++) {
-				System.out.println(questionNumber[i]);
-			}*/
 			connected = true;
 			System.out.println("");
 			
@@ -72,9 +66,7 @@ public class HandleASession implements Runnable{
 					outputToClient2.writeInt(1);
 					outputToClient3.writeInt(1);
 				} else if (answer1 == 2 || answer2 == 2 || answer3 == 2){
-					//player1.close();
-					//player2.close();
-					//player3.close();
+					
 					outputToClient1.writeInt(2);
 					outputToClient2.writeInt(2);
 					outputToClient3.writeInt(2);
@@ -83,10 +75,6 @@ public class HandleASession implements Runnable{
 					connected = false;
 					playing = false;
 					QuizServer.closeSocket();
-					
-					
-					//System.exit(1);
-					
 					
 
 				}
